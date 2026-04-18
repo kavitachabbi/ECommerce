@@ -1,17 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { useGlobalState } from '../context/GlobalState';
 import { 
   User, 
   ShieldCheck, 
   ChevronRight, 
   Zap,
   Target,
-  Brain
+  Brain,
+  DollarSign
 } from 'lucide-react';
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  const { financialMetrics, fetchFinancialMetrics, toINR } = useGlobalState();
+
+  useEffect(() => {
+    fetchFinancialMetrics();
+  }, [fetchFinancialMetrics]);
+
+  const totalRev = financialMetrics?.total_revenue || 125000; // Fallback to mock
 
   return (
     <div className="min-h-screen w-screen h-screen relative overflow-hidden font-sans">
@@ -90,6 +99,7 @@ const LandingPage = () => {
             description="Analyze 10/90 splits, authorize transactions, and monitor fiscal ecosystem health."
             icon={Zap}
             accent="amber"
+            meta={`Gross Volume: ${toINR(totalRev)}`}
             onOpen={() => navigate('/admin-finance')}
           />
         </motion.div>
@@ -131,7 +141,7 @@ const PortalFeature = ({ icon: Icon, text }) => (
 );
 
 // ── Login Card Sub-Component ──────────────────────────────────
-const LoginCard = ({ title, description, icon: Icon, accent, onOpen }) => {
+const LoginCard = ({ title, description, icon: Icon, accent, onOpen, meta }) => {
   return (
     <motion.button
       whileHover={{ y: -6, scale: 1.02 }}
@@ -160,7 +170,14 @@ const LoginCard = ({ title, description, icon: Icon, accent, onOpen }) => {
         </div>
 
         <h3 className="text-2xl font-black text-white mb-2 tracking-tight">{title}</h3>
-        <p className="text-white/40 text-sm font-medium leading-relaxed mb-8">{description}</p>
+        <p className="text-white/40 text-sm font-medium leading-relaxed mb-4">{description}</p>
+
+        {meta && (
+          <div className="mb-6 flex items-center gap-2">
+            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="text-[10px] font-black text-emerald-400 uppercase tracking-widest">{meta}</span>
+          </div>
+        )}
 
         <div className={`flex items-center gap-2 font-black uppercase text-[10px] tracking-[0.2em] transition-all duration-300 ${
           accent === 'emerald' ? 'text-emerald-400' :
