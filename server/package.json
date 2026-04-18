@@ -1,0 +1,6 @@
+{
+  "name": "ecoloop-server",
+  "version": "1.0.0",
+  "description": "EcoLoop Backend API",
+  "main": "server.js"
+}

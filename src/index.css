@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --neon-emerald: #10B981;
+  --neon-blue: #3B82F6;
+  --dark-bg: #0A0F0D;
+  --dark-surface: #121816;
+  --glass-border: rgba(255, 255, 255, 0.08);
+}
+
+@layer base {
+  body {
+    @apply bg-[#0A0F0D] text-slate-100 font-sans antialiased selection:bg-emerald-500/30;
+    background-attachment: fixed;
+  }
+
+  * { scrollbar-width: thin; scrollbar-color: rgba(16,185,129,0.2) transparent; }
+  *::-webkit-scrollbar { width: 4px; }
+  *::-webkit-scrollbar-track { background: transparent; }
+  *::-webkit-scrollbar-thumb { background: rgba(16,185,129,0.25); border-radius: 99px; }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: -0.025em;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-[#121816]/70 backdrop-blur-[20px] border border-white/5 shadow-2xl;
+  }
+  
+  .glass-card {
+    @apply bg-[#1A221F]/40 backdrop-blur-xl border border-white/5 hover:border-emerald-500/20 transition-all duration-500;
+  }
+
+  .dark-card {
+    @apply bg-[#0F1712]/80;
+  }
+
+  .nav-glass {
+    @apply bg-[#121816]/80 backdrop-blur-2xl border border-white/10;
+  }
+
+  .neon-border-emerald {
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.1), inset 0 0 1px rgba(16, 185, 129, 0.2);
+  }
+
+  .neon-border-blue {
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.1), inset 0 0 1px rgba(59, 130, 246, 0.2);
+  }
+
+  .btn-neon {
+    @apply relative overflow-hidden px-6 py-3 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all duration-300 text-white;
+    background: linear-gradient(135deg, var(--neon-emerald), #059669);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+  }
+
+  .btn-neon:hover {
+    @apply scale-105;
+    box-shadow: 0 0 35px rgba(16, 185, 129, 0.55);
+  }
+
+  .text-neon-emerald {
+    @apply text-emerald-400;
+    text-shadow: 0 0 12px rgba(16, 185, 129, 0.5);
+  }
+
+  .text-neon-blue {
+    @apply text-blue-400;
+    text-shadow: 0 0 12px rgba(59, 130, 246, 0.5);
+  }
+}
+
+/* Shimmer keyframe — used by ShimmerSkeleton via before:animate-[shimmer_1.5s_infinite] */
+@keyframes shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%);  }
+}
+
+/* Neon pulse effect */
+@keyframes neonPulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(16,185,129,0.3); }
+  50%       { box-shadow: 0 0 25px rgba(16,185,129,0.7); }
+}
+
+.neon-pulse {
+  animation: neonPulse 2s ease-in-out infinite;
+}
+
+
